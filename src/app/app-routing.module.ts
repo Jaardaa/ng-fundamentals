@@ -4,6 +4,7 @@ import { Page404Component } from './errors/page404/page404.component';
 
 import {
   CreateEventComponent,
+  CreateSessionComponent,
   EventDetailsComponent,
   EventListComponent,
   EventRouteActivatorService,
@@ -21,6 +22,9 @@ const routes: Routes = [
     path: 'events/:id',
     component: EventDetailsComponent,
     canActivate: [EventRouteActivatorService],
+  },
+  {
+    path: 'events/session/new', component: CreateSessionComponent
   },
   { path: '404', component: Page404Component },
   { path: '', redirectTo: '/events', pathMatch: 'full' },

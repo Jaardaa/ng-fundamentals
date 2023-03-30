@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IEvent } from '../shared/index';
 
 @Component({
   selector: 'app-event-thumbnail',
-  template: ` <div [routerLink]="['/events', event.id]" class="well hoverwell thumbnail">
-    <h2>{{ event?.name }}</h2>
-    <div>Date: {{ event?.date }}</div>
+  template: ` <div [routerLink]="['/events', event?.id]" class="well hoverwell thumbnail">
+    <h2>{{ event?.name | uppercase }}</h2>
+    <div>Date: {{ event?.date | date:'shortDate' }}</div>
     <div
       [ngClass]="getStartTimeClass()"
       [ngSwitch]="event?.time"
@@ -14,7 +15,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       <span *ngSwitchCase="'10:00 am'">(Late Start)</span>
       <span *ngSwitchDefault>(Normal Start)</span>
     </div>
-    <div>Price: \${{ event?.price }}</div>
+    <div>Price: {{ event?.price | currency:'USD' }}</div>
     <div *ngIf="event?.location">
       <span>Location: {{ event?.location?.address }}</span>
       <span class="pad-left"
@@ -44,7 +45,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   ],
 })
 export class EventThumbnailComponent {
-  @Input() event: any;
+  @Input() event: IEvent | undefined;
 
   getStartTimeClass() {
     const isEarlyStart = this.event && this.event.time === '8:00 am'
